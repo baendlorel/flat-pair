@@ -61,6 +61,46 @@ console.log(pair.size); // 2
 pair.clear();
 ```
 
+### Iteration and at()
+
+FlatPair implements iterator helpers similar to `Map` and arrays:
+
+- `forEach()` - like normal `forEach` from Array
+- `keys()` - returns an iterator over keys
+- `values()` - returns an iterator over values
+- `entries()` - returns an iterator over [key, value] pairs
+- `Symbol.iterator` - the default iterator, same as `entries()`
+- `at(index)` - returns the [key, value] pair at zero-based index or `undefined` if out of range
+
+```typescript
+// keys / values / entries
+console.log([...fp.keys()]); // ['a','b']
+console.log([...fp.values()]); // [1,2]
+console.log([...fp.entries()]); // [['a',1], ['b',2]]
+
+// default iterator
+for (const [k, v] of fp) {
+  console.log(k, v);
+}
+
+// at
+console.log(fp.at(0)); // ['a', 1]
+console.log(fp.at(2)); // undefined
+```
+
+### forEach
+
+`forEach` iterates pairs and follows the callback signature `(value, key, index, arr)` and accepts an optional `thisArg`.
+
+```typescript
+fp.forEach(
+  function (value, key, index, arr) {
+    console.log(index, key, value, arr === (fp as any).items);
+  },
+  { myThis: true }
+);
+```
+
 ### Using Static Functions (Zero Cost)
 
 ```typescript
@@ -95,49 +135,6 @@ operator.add(items, 'level', 5);
 
 console.log(operator.find(items, 'score')); // 100
 console.log(operator.findByValue(items, 5)); // 'level'
-```
-
-## Use Cases
-
-### Configuration Storage
-
-```typescript
-const config = new FlatPair(['apiUrl', 'https://api.example.com', 'timeout', 5000, 'retries', 3]);
-
-// Easy serialization
-const serialized = JSON.stringify(config.items);
-const restored = new FlatPair(JSON.parse(serialized));
-```
-
-### Cache with Reverse Lookup
-
-```typescript
-const cache = new FlatPair<string, string>([]);
-
-cache.add('user:123', 'john_doe');
-cache.add('user:456', 'jane_smith');
-
-// Find user ID by username
-const userId = cache.findByValue('john_doe'); // 'user:123'
-```
-
-### Event Mapping
-
-```typescript
-const eventMap = new FlatPair([
-  'click',
-  'handleClick',
-  'hover',
-  'handleHover',
-  'keypress',
-  'handleKeyPress',
-]);
-
-// Get handler by event
-const handler = eventMap.find('click'); // 'handleClick'
-
-// Get event by handler
-const event = eventMap.findByValue('handleHover'); // 'hover'
 ```
 
 ## Performance
