@@ -1,4 +1,4 @@
-import { add, remove, find, findByValue, removeByValue, forEach } from './operators.js';
+import { add, remove, find, findByValue, removeByValue, forEach, at } from './operators.js';
 
 export class FlatPair<K, V> {
   static from<T extends Map<any, any>>(
@@ -50,11 +50,37 @@ export class FlatPair<K, V> {
     return findByValue<K, V>(this.items, value);
   }
 
+  at(index: number): [K, V] | undefined {
+    return at<K, V>(this.items, index);
+  }
+
   clear() {
     this.items.length = 0;
   }
 
   forEach(callback: (value: V, key: K, index: number, arr: any[]) => void, thisArg?: any): void {
     forEach<K, V>(this.items, callback, thisArg);
+  }
+
+  *keys(): IterableIterator<K> {
+    for (let i = 0; i < this.items.length; i += 2) {
+      yield this.items[i] as K;
+    }
+  }
+
+  *values(): IterableIterator<V> {
+    for (let i = 1; i < this.items.length; i += 2) {
+      yield this.items[i] as V;
+    }
+  }
+
+  *entries(): IterableIterator<[K, V]> {
+    for (let i = 0; i < this.items.length; i += 2) {
+      yield [this.items[i] as K, this.items[i + 1] as V];
+    }
+  }
+
+  [Symbol.iterator](): IterableIterator<[K, V]> {
+    return this.entries();
   }
 }

@@ -65,6 +65,13 @@ export function forEach<K, V>(
   }
 }
 
+export function at<K, V>(items: any[], index: number): [K, V] | undefined {
+  if (index < 0) return undefined;
+  const pos = index * 2;
+  if (pos + 1 >= items.length) return undefined;
+  return [items[pos] as K, items[pos + 1] as V];
+}
+
 export function clear(items: any[]): void {
   items.length = 0;
 }

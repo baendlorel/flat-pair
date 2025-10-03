@@ -1,4 +1,4 @@
-import { add, remove, find, findByValue, removeByValue, forEach } from './operators.js';
+import { add, remove, find, findByValue, removeByValue, forEach, at } from './operators.js';
 
 /**
  * Creates an static operator
@@ -30,6 +30,28 @@ export class FlatPairOperator<K, V> {
     thisArg?: any
   ): void {
     return forEach(items, callback, thisArg);
+  }
+
+  at(items: any[], index: number): [K, V] | undefined {
+    return at<K, V>(items, index);
+  }
+
+  *keys(items: any[]): IterableIterator<K> {
+    for (let i = 0; i < items.length; i += 2) {
+      yield items[i] as K;
+    }
+  }
+
+  *values(items: any[]): IterableIterator<V> {
+    for (let i = 1; i < items.length; i += 2) {
+      yield items[i] as V;
+    }
+  }
+
+  *entries(items: any[]): IterableIterator<[K, V]> {
+    for (let i = 0; i < items.length; i += 2) {
+      yield [items[i] as K, items[i + 1] as V];
+    }
   }
 
   clear(items: any[]): void {
