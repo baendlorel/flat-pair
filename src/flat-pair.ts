@@ -50,15 +50,18 @@ export class FlatPair<K, V> {
     return findByValue<K, V>(this.items, value);
   }
 
-  at(index: number): [K, V] | undefined {
-    return at<K, V>(this.items, index);
+  at(pairIndex: number): [K, V] | undefined {
+    return at<K, V>(this.items, pairIndex);
   }
 
   clear() {
     this.items.length = 0;
   }
 
-  forEach(callback: (value: V, key: K, index: number, arr: any[]) => void, thisArg?: any): void {
+  forEach(
+    callback: (value: V, key: K, pairIndex: number, arr: any[]) => void,
+    thisArg?: any
+  ): void {
     forEach<K, V>(this.items, callback, thisArg);
   }
 

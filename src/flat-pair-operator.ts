@@ -26,14 +26,14 @@ export class FlatPairOperator<K, V> {
 
   forEach(
     items: any[],
-    callback: (value: V, key: K, index: number, arr: any[]) => void,
+    callback: (value: V, key: K, pairIndex: number, arr: any[]) => void,
     thisArg?: any
   ): void {
     return forEach(items, callback, thisArg);
   }
 
-  at(items: any[], index: number): [K, V] | undefined {
-    return at<K, V>(items, index);
+  at(items: any[], pairIndex: number): [K, V] | undefined {
+    return at<K, V>(items, pairIndex);
   }
 
   *keys(items: any[]): IterableIterator<K> {
