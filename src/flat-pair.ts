@@ -1,4 +1,4 @@
-import { add, remove, find, findByValue } from './flat-pair-operator.js';
+import { add, remove, find, findByValue, removeByValue, forEach } from './operators.js';
 
 export class FlatPair<K, V> {
   static from<T extends Map<any, any>>(
@@ -38,6 +38,10 @@ export class FlatPair<K, V> {
     return remove(this.items, key);
   }
 
+  removeByValue(value: V): boolean {
+    return removeByValue(this.items, value);
+  }
+
   find(key: K): V | undefined {
     return find<K, V>(this.items, key);
   }
@@ -48,5 +52,9 @@ export class FlatPair<K, V> {
 
   clear() {
     this.items.length = 0;
+  }
+
+  forEach(callback: (value: V, key: K, index: number, arr: any[]) => void, thisArg?: any): void {
+    forEach<K, V>(this.items, callback, thisArg);
   }
 }

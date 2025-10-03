@@ -8,6 +8,8 @@ import {
   findByValue,
   size,
   clear,
+  removeByValue,
+  forEach,
 } from '../src/index.js';
 
 describe('FlatPair Class', () => {
@@ -230,5 +232,65 @@ describe('Edge Cases and Type Safety', () => {
     expect(flatPair.size).toBe(0);
     expect(flatPair.find('any')).toBeUndefined();
     expect(flatPair.remove('any')).toBe(false);
+  });
+});
+
+describe('forEach and removeByValue behavior', () => {
+  it('FlatPair.forEach should call callback with (value, key, index, arr) and bind thisArg', () => {
+    const flatPair = new FlatPair(['k1', 'v1', 'k2', 'v2']);
+    const calls: any[] = [];
+    const thisArg = { marker: 'yes' };
+
+    flatPair.forEach(function (this: any, value, key, index, arr) {
+      calls.push({ value, key, index, arr, thisMarker: this.marker });
+    }, thisArg);
+
+    expect(calls.length).toBe(2);
+    expect(calls[0].value).toBe('v1');
+    expect(calls[0].key).toBe('k1');
+    expect(calls[0].index).toBe(0);
+    expect(calls[0].arr).toBe((flatPair as any).items);
+    expect(calls[0].thisMarker).toBe('yes');
+
+    expect(calls[1].value).toBe('v2');
+    expect(calls[1].key).toBe('k2');
+    expect(calls[1].index).toBe(1);
+  });
+
+  it('FlatPairOperator.forEach should call callback with (value, key, index, arr) and bind thisArg', () => {
+    const operator = new FlatPairOperator<string, string>();
+    const items: any[] = ['a', 'A', 'b', 'B'];
+    const calls: any[] = [];
+    const thisArg = { t: 1 };
+
+    operator.forEach(
+      items,
+      function (this: any, value, key, index, arr) {
+        calls.push({ value, key, index, arr, t: this.t });
+      },
+      thisArg
+    );
+
+    expect(calls.length).toBe(2);
+    expect(calls[0].value).toBe('A');
+    expect(calls[0].key).toBe('a');
+    expect(calls[0].index).toBe(0);
+    expect(calls[0].arr).toBe(items);
+    expect(calls[0].t).toBe(1);
+  });
+
+  it('static removeByValue should remove first pair matching value and return boolean', () => {
+    const items: any[] = ['x', 'X', 'y', 'Y'];
+    expect(removeByValue(items, 'X')).toBe(true);
+    expect(items).toEqual(['y', 'Y']);
+    expect(removeByValue(items, 'nope')).toBe(false);
+  });
+
+  it('FlatPair.removeByValue should remove by value and update size', () => {
+    const fp = new FlatPair(['p', 'P', 'q', 'Q']);
+    expect(fp.removeByValue('Q')).toBe(true);
+    expect(fp.size).toBe(1);
+    expect(fp.findByValue('Q')).toBeUndefined();
+    expect(fp.removeByValue('missing')).toBe(false);
   });
 });

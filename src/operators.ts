@@ -42,6 +42,29 @@ export function remove<K>(items: any[], key: K): boolean {
   return false;
 }
 
+export function removeByValue<K, V>(items: any[], value: V): boolean {
+  for (let i = 1; i < items.length; i += 2) {
+    if (items[i] === value) {
+      items.splice(i - 1, 2);
+      return true;
+    }
+  }
+  return false;
+}
+
+export function forEach<K, V>(
+  items: any[],
+  callback: (value: V, key: K, index: number, arr: any[]) => void,
+  thisArg?: any
+): void {
+  let idx = 0;
+  for (let i = 0; i < items.length; i += 2) {
+    // callback receives value, key, index, and the items array itself
+    callback.call(thisArg, items[i + 1] as V, items[i] as K, idx, items);
+    idx++;
+  }
+}
+
 export function clear(items: any[]): void {
   items.length = 0;
 }
