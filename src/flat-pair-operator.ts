@@ -1,5 +1,6 @@
 import {
   add,
+  set,
   remove,
   get,
   getByValue,
@@ -15,8 +16,19 @@ import {
  * Creates an static operator
  */
 export class FlatPairOperator<K, V> {
+  /**
+   * Will check if the key already exists, if so then do nothing.
+   * - different from Map.set, **won't** change value if key exists
+   */
   add(items: any[], key: K, value: V): void {
     add(items, key, value);
+  }
+
+  /**
+   * Same as Map.set
+   */
+  set(items: any[], key: K, value: V): void {
+    set(items, key, value);
   }
 
   remove(items: any[], key: K): boolean {

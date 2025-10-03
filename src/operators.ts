@@ -13,11 +13,30 @@ export function size(items: any[]): number {
   return len / 2;
 }
 
+/**
+ * Will check if the key already exists, if so then do nothing.
+ * - different from Map.set, **won't** change value if key exists
+ */
 export function add<K, V>(items: any[], key: K, value: V): void {
   const len = items.length;
   __INVALID_LENGTH_THROW__(len);
   for (let i = 0; i < len; i += 2) {
     if ($is(items[i], key)) {
+      return;
+    }
+  }
+  items.push(key, value);
+}
+
+/**
+ * Same as Map.set
+ */
+export function set<K, V>(items: any[], key: K, value: V): void {
+  const len = items.length;
+  __INVALID_LENGTH_THROW__(len);
+  for (let i = 0; i < len; i += 2) {
+    if ($is(items[i], key)) {
+      items[i + 1] = value;
       return;
     }
   }

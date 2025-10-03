@@ -37,8 +37,8 @@ import { FlatPair, FlatPairOperator, add, get, find ...others } from 'flat-pair'
 ```typescript
 // userId - detail pair
 const pairs = new FlatPair<number, Detail>();
-pairs.add(1, { name: 'Alice', age: 30 });
-pairs.add(2, { name: 'Bob', age: 25 });
+pairs.add(1, { name: 'Alice', age: 30 }); // won't change value when key exists
+pairs.set(2, { name: 'Bob', age: 25 });
 pairs.remove(1);
 pairs.find((value, key) => value.age > 20);
 ```

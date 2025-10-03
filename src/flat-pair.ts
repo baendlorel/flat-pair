@@ -1,5 +1,6 @@
 import {
   add,
+  set,
   remove,
   get,
   getByValue,
@@ -46,9 +47,19 @@ export class FlatPair<K, V> {
 
   /**
    * Will check if the key already exists, if so then do nothing.
+   * - different from Map.set, **won't** change value if key exists
    */
   add(key: K, value: V): this {
     add<K, V>(this._items, key, value);
+    return this;
+  }
+
+  /**
+   * Same as Map.set
+   */
+  set(key: K, value: V): this {
+    // update the value for an existing key if present
+    set<K, V>(this._items, key, value);
     return this;
   }
 
