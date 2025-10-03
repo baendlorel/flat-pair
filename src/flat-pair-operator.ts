@@ -1,4 +1,14 @@
-import { add, remove, find, findByValue, removeByValue, forEach, at } from './operators.js';
+import {
+  add,
+  remove,
+  get,
+  getByValue,
+  removeByValue,
+  forEach,
+  at,
+  has,
+  hasByValue,
+} from './operators.js';
 
 /**
  * Creates an static operator
@@ -12,12 +22,12 @@ export class FlatPairOperator<K, V> {
     return remove(items, key);
   }
 
-  find(items: any[], key: K): V | undefined {
-    return find(items, key);
+  get(items: any[], key: K): V | undefined {
+    return get(items, key);
   }
 
-  findByValue(items: any[], value: V): K | undefined {
-    return findByValue(items, value);
+  getByValue(items: any[], value: V): K | undefined {
+    return getByValue(items, value);
   }
 
   removeByValue(items: any[], value: V): boolean {
@@ -56,5 +66,13 @@ export class FlatPairOperator<K, V> {
 
   clear(items: any[]): void {
     items.length = 0;
+  }
+
+  has(items: any[], key: K): boolean {
+    return has(items, key);
+  }
+
+  hasByValue(items: any[], value: V): boolean {
+    return hasByValue(items, value);
   }
 }

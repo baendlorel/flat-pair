@@ -4,8 +4,8 @@ import {
   FlatPairOperator,
   add,
   remove,
-  find,
-  findByValue,
+  get,
+  getByValue,
   size,
   clear,
   removeByValue,
@@ -136,17 +136,17 @@ describe('FlatPairOperator Functions', () => {
   it('should find values by key', () => {
     const items = ['key1', 'value1', 'key2', 'value2'];
 
-    expect(find(items, 'key1')).toBe('value1');
-    expect(find(items, 'key2')).toBe('value2');
-    expect(find(items, 'nonexistent')).toBeUndefined();
+    expect(get(items, 'key1')).toBe('value1');
+    expect(get(items, 'key2')).toBe('value2');
+    expect(get(items, 'nonexistent')).toBeUndefined();
   });
 
   it('should find keys by value', () => {
     const items = ['key1', 'value1', 'key2', 'value2'];
 
-    expect(findByValue(items, 'value1')).toBe('key1');
-    expect(findByValue(items, 'value2')).toBe('key2');
-    expect(findByValue(items, 'nonexistent')).toBeUndefined();
+    expect(getByValue(items, 'value1')).toBe('key1');
+    expect(getByValue(items, 'value2')).toBe('key2');
+    expect(getByValue(items, 'nonexistent')).toBeUndefined();
   });
 
   it('should remove items from array', () => {

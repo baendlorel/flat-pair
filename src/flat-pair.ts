@@ -1,4 +1,14 @@
-import { add, remove, find, findByValue, removeByValue, forEach, at } from './operators.js';
+import {
+  add,
+  remove,
+  get,
+  getByValue,
+  removeByValue,
+  forEach,
+  at,
+  has,
+  hasByValue,
+} from './operators.js';
 
 export class FlatPair<K, V> {
   static from<T extends Map<any, any>>(
@@ -34,6 +44,10 @@ export class FlatPair<K, V> {
     return this;
   }
 
+  hasByValue(value: V): boolean {
+    return hasByValue(this.items, value);
+  }
+
   remove(key: K): boolean {
     return remove(this.items, key);
   }
@@ -42,12 +56,12 @@ export class FlatPair<K, V> {
     return removeByValue(this.items, value);
   }
 
-  find(key: K): V | undefined {
-    return find<K, V>(this.items, key);
+  get(key: K): V | undefined {
+    return get<K, V>(this.items, key);
   }
 
-  findByValue(value: V): K | undefined {
-    return findByValue<K, V>(this.items, value);
+  getByValue(value: V): K | undefined {
+    return getByValue<K, V>(this.items, value);
   }
 
   at(pairIndex: number): [K, V] | undefined {
@@ -56,6 +70,10 @@ export class FlatPair<K, V> {
 
   clear() {
     this.items.length = 0;
+  }
+
+  has(key: K): boolean {
+    return has(this.items, key);
   }
 
   forEach(

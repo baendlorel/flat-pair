@@ -1,3 +1,10 @@
+export function size(items: any[]): number {
+  const len = items.length;
+  if (len % 2 !== 0) {
+    throw new Error('Invalid items length, must be even number');
+  }
+  return len / 2;
+}
 export function add<K, V>(items: any[], key: K, value: V): void {
   const len = items.length;
   for (let i = 0; i < len; i += 2) {
@@ -8,15 +15,27 @@ export function add<K, V>(items: any[], key: K, value: V): void {
   items.push(key, value);
 }
 
-export function size(items: any[]): number {
+export function has<K>(items: any[], key: K): boolean {
   const len = items.length;
-  if (len % 2 !== 0) {
-    throw new Error('Invalid items length, must be even number');
+  for (let i = 0; i < len; i += 2) {
+    if (items[i] === key) {
+      return true;
+    }
   }
-  return len / 2;
+  return false;
 }
 
-export function find<K, V>(items: any[], key: K): V | undefined {
+export function hasByValue<V>(items: any[], value: V): boolean {
+  const len = items.length;
+  for (let i = 1; i < len; i += 2) {
+    if (items[i] === value) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export function get<K, V>(items: any[], key: K): V | undefined {
   const len = items.length;
   for (let i = 0; i < len; i += 2) {
     if (items[i] === key) {
@@ -26,7 +45,7 @@ export function find<K, V>(items: any[], key: K): V | undefined {
   return undefined;
 }
 
-export function findByValue<K, V>(items: any[], value: V): K | undefined {
+export function getByValue<K, V>(items: any[], value: V): K | undefined {
   const len = items.length;
   for (let i = 1; i < len; i += 2) {
     if (items[i] === value) {
