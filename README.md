@@ -14,7 +14,7 @@ For more awesome packages, check out [my homepage💛](https://baendlorel.github
 - 🛡️ **Type Safe**: Full TypeScript support with generic types
 - 🎯 **Zero Cost**: Static methods available for minimal overhead
 - ⚡ **Lightweight**: No dependencies, minimal bundle size
-- 🌲 **Native Behavior**: `forEach`, `find` acts like they are in `Array`. Equality check uses `Object.is`
+- 🌲 **Native Behavior**: `forEach`, `find` acts like they are in `Array`. Equality check uses `SameValueZero`
 
 ## Installation / Import
 

@@ -10,6 +10,7 @@ import alias from '@rollup/plugin-alias';
 import terser from '@rollup/plugin-terser';
 import replace from '@rollup/plugin-replace';
 import dts from 'rollup-plugin-dts';
+import funcMacro from 'rollup-plugin-func-macro';
 
 // custom plugins
 import { replaceLiteralOpts, replaceOpts } from './.scripts/plugins/replace.mjs';
@@ -51,7 +52,13 @@ const options = [
 
     plugins: [
       alias(aliasOpts),
+      replace({
+        preventAssignment: false,
+        delimiters: ['', ''],
+        replaceLiteralOpts,
+      }),
       replace(replaceOpts),
+      funcMacro(),
       resolve(),
       commonjs(),
       typescript({ tsconfig }),

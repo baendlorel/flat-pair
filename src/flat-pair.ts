@@ -27,10 +27,9 @@ export class FlatPair<K, V> {
   private readonly _items: any[] = [];
 
   constructor(items: any[]) {
-    if (items.length % 2 !== 0) {
-      throw new TypeError('FlatPair items length must be even');
-    }
-    this._items = items;
+    const len = items.length;
+    __INVALID_LENGTH_THROW__;
+    this._items = items.slice();
   }
 
   get size() {
