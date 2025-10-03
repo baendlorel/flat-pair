@@ -3,6 +3,8 @@ import {
   remove,
   get,
   getByValue,
+  find,
+  findIndex,
   removeByValue,
   forEach,
   has,
@@ -27,6 +29,20 @@ export class FlatPairOperator<K, V> {
 
   getByValue(items: any[], value: V): K | undefined {
     return getByValue(items, value);
+  }
+
+  find(
+    items: any[],
+    predicate: (value: V, key: K, index: number, array: any[]) => boolean
+  ): [K, V] | undefined {
+    return find<K, V>(items, predicate);
+  }
+
+  findIndex(
+    items: any[],
+    predicate: (value: V, key: K, index: number, array: any[]) => boolean
+  ): number {
+    return findIndex<K, V>(items, predicate);
   }
 
   removeByValue(items: any[], value: V): boolean {

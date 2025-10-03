@@ -3,6 +3,8 @@ import {
   remove,
   get,
   getByValue,
+  find,
+  findIndex,
   removeByValue,
   forEach,
   has,
@@ -61,6 +63,14 @@ export class FlatPair<K, V> {
 
   getByValue(value: V): K | undefined {
     return getByValue<K, V>(this.items, value);
+  }
+
+  find(predicate: (value: V, key: K, index: number, array: any[]) => boolean): [K, V] | undefined {
+    return find<K, V>(this.items, predicate);
+  }
+
+  findIndex(predicate: (value: V, key: K, index: number, array: any[]) => boolean): number {
+    return findIndex<K, V>(this.items, predicate);
   }
 
   clear() {
