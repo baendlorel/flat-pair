@@ -80,36 +80,49 @@ export function removeByValue<V>(items: any[], value: V): boolean {
 /**
  * Behaviors are similar to `Array.prototype.forEach`, caches length and checks index existence.
  *
- * - `callback`: real index in the `arr` is `2 * pairIndex`.
+ * - `callback`: index is the index of array, not the pair count.
  */
 export function forEach<K, V>(
   items: any[],
-  callback: (value: V, key: K, pairIndex: number, array: any[]) => void,
+  callback: (value: V, key: K, index: number, array: any[]) => void,
   thisArg?: any
 ): void {
-  let idx = 0;
   const len = items.length;
   for (let i = 0; i < len; i += 2) {
     if (i in items) {
-      callback.call(thisArg, items[i + 1] as V, items[i] as K, idx, items);
+      callback.call(thisArg, items[i + 1] as V, items[i] as K, i, items);
     }
-    idx++;
   }
-}
-
-export function at<K, V>(items: any[], pairIndex: number): [K, V] | undefined {
-  if (pairIndex < 0) {
-    return undefined;
-  }
-
-  const pos = pairIndex * 2;
-  if (pos + 1 >= items.length) {
-    return undefined;
-  }
-
-  return [items[pos] as K, items[pos + 1] as V];
 }
 
 export function clear(items: any[]): void {
   items.length = 0;
+}
+
+export function find<K, V>(
+  items: any[],
+  predicate: (value: V, key: K, index: number, array: any[]) => boolean
+): [K, V] | undefined {
+  const len = items.length;
+  for (let i = 0; i < len; i++) {
+    const found = predicate(items[i + 1] as V, items[i] as K, i, items);
+    if (found) {
+      return [items[i] as K, items[i + 1] as V];
+    }
+  }
+  return undefined;
+}
+
+export function findIndex<K, V>(
+  items: any[],
+  predicate: (value: V, key: K, index: number, array: any[]) => boolean
+): number {
+  const len = items.length;
+  for (let i = 0; i < len; i++) {
+    const found = predicate(items[i + 1] as V, items[i] as K, i, items);
+    if (found) {
+      return i;
+    }
+  }
+  return -1;
 }

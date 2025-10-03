@@ -5,7 +5,6 @@ import {
   getByValue,
   removeByValue,
   forEach,
-  at,
   has,
   hasByValue,
 } from './operators.js';
@@ -64,10 +63,6 @@ export class FlatPair<K, V> {
     return getByValue<K, V>(this.items, value);
   }
 
-  at(pairIndex: number): [K, V] | undefined {
-    return at<K, V>(this.items, pairIndex);
-  }
-
   clear() {
     this.items.length = 0;
   }
@@ -76,10 +71,7 @@ export class FlatPair<K, V> {
     return has(this.items, key);
   }
 
-  forEach(
-    callback: (value: V, key: K, pairIndex: number, array: any[]) => void,
-    thisArg?: any
-  ): void {
+  forEach(callback: (value: V, key: K, index: number, array: any[]) => void, thisArg?: any): void {
     forEach<K, V>(this.items, callback, thisArg);
   }
 
