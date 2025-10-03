@@ -28,7 +28,7 @@ export class FlatPair<K, V> {
 
   constructor(items: any[]) {
     const len = items.length;
-    __INVALID_LENGTH_THROW__;
+    __INVALID_LENGTH_THROW__(len);
     this._items = items.slice();
   }
 

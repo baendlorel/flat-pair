@@ -42,9 +42,6 @@ export const replaceOpts = {
     __NAME__,
     __KEBAB_NAME__,
     __PKG_INFO__,
-    __INVALID_LENGTH_THROW__: `if (len % 2 !== 0) {throw new TypeError('[__NAME__: __func__] items length must be even number');}`,
-    // __OPTS__: `Rollup${__NAME__}Options`,
-    // __STRICT_OPTS__: `Rollup${__NAME__}StrictOptions`,
   },
 };
 
@@ -52,6 +49,8 @@ export const replaceOpts = {
  * @type {Record<string, any>}
  */
 export const replaceLiteralOpts = {
+  '__INVALID_LENGTH_THROW__(len);': `if (len % 2 !== 0) {throw new TypeError('[__NAME__: __func__] items length must be even number');}`,
+  // common
   'declare const __IS_PROD__: boolean;\n': '',
   'const __IS_PROD__: boolean;\n': '',
   'logger.info(': "console.log(`%cinfo - __func__:`, 'color:#007ACC',",

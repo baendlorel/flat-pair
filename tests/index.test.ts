@@ -15,6 +15,11 @@ import {
 } from '../src/operators.js';
 
 describe('operators', () => {
+  it('size returns pair count and throws on odd length', () => {
+    expect(size(['a', 1, 'b', 2])).toBe(2);
+    expect(() => size(['a', 1, 'b'])).toThrow('Invalid items length, must be even number');
+  });
+
   it('add appends pair and avoids duplicates', () => {
     const items: any[] = [];
     add(items, 'k1', 'v1');
