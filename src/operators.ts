@@ -5,6 +5,9 @@ export function size(items: any[]): number {
   }
   return len / 2;
 }
+
+// todo 等于号改为objectis
+
 export function add<K, V>(items: any[], key: K, value: V): void {
   const len = items.length;
   for (let i = 0; i < len; i += 2) {

@@ -24,82 +24,90 @@ export class FlatPair<K, V> {
     return new FlatPair(items) as any;
   }
 
-  private readonly items: any[] = [];
+  private readonly _items: any[] = [];
 
   constructor(items: any[]) {
     if (items.length % 2 !== 0) {
       throw new TypeError('FlatPair items length must be even');
     }
-    this.items = items;
+    this._items = items;
   }
 
   get size() {
-    return this.items.length / 2;
+    return this._items.length / 2;
+  }
+
+  /**
+   * A reference to the internal array
+   * - associated with `this.findIndex`
+   */
+  get array() {
+    return this._items;
   }
 
   /**
    * Will check if the key already exists, if so then do nothing.
    */
   add(key: K, value: V): this {
-    add<K, V>(this.items, key, value);
+    add<K, V>(this._items, key, value);
     return this;
   }
 
   hasByValue(value: V): boolean {
-    return hasByValue(this.items, value);
+    return hasByValue(this._items, value);
   }
 
   remove(key: K): boolean {
-    return remove(this.items, key);
+    return remove(this._items, key);
   }
 
   removeByValue(value: V): boolean {
-    return removeByValue(this.items, value);
+    return removeByValue(this._items, value);
   }
 
   get(key: K): V | undefined {
-    return get<K, V>(this.items, key);
+    return get<K, V>(this._items, key);
   }
 
   getByValue(value: V): K | undefined {
-    return getByValue<K, V>(this.items, value);
+    return getByValue<K, V>(this._items, value);
   }
 
   find(predicate: (value: V, key: K, index: number, array: any[]) => boolean): [K, V] | undefined {
-    return find<K, V>(this.items, predicate);
+    return find<K, V>(this._items, predicate);
   }
 
   findIndex(predicate: (value: V, key: K, index: number, array: any[]) => boolean): number {
-    return findIndex<K, V>(this.items, predicate);
+    return findIndex<K, V>(this._items, predicate);
   }
 
   clear() {
-    this.items.length = 0;
+    this._items.length = 0;
   }
 
   has(key: K): boolean {
-    return has(this.items, key);
+    return has(this._items, key);
   }
 
   forEach(callback: (value: V, key: K, index: number, array: any[]) => void, thisArg?: any): void {
-    forEach<K, V>(this.items, callback, thisArg);
+    forEach<K, V>(this._items, callback, thisArg);
   }
 
   *keys(): IterableIterator<K> {
-    for (let i = 0; i < this.items.length; i += 2) {
-      yield this.items[i] as K;
+    for (let i = 0; i < this._items.length; i += 2) {
+      yield this._items[i] as K;
     }
   }
 
   *values(): IterableIterator<V> {
-    for (let i = 1; i < this.items.length; i += 2) {
-      yield this.items[i] as V;
+    for (let i = 1; i < this._items.length; i += 2) {
+      yield this._items[i] as V;
     }
   }
 
   *entries(): IterableIterator<[K, V]> {
-    for (let i = 0; i < this.items.length; i += 2) {
-      yield [this.items[i] as K, this.items[i + 1] as V];
+    for (let i = 0; i < this._items.length; i += 2) {
+      yield [this._items[i] as K, this._items[i + 1] as V];
     }
   }
 
