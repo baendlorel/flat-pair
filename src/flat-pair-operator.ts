@@ -50,19 +50,19 @@ export function clear(items: any[]): void {
  * Creates an static operator
  */
 export class FlatPairOperator<K, V> {
-  add<K, V>(items: any[], key: K, value: V): void {
+  add(items: any[], key: K, value: V): void {
     add(items, key, value);
   }
 
-  remove<K>(items: any[], key: K): boolean {
+  remove(items: any[], key: K): boolean {
     return remove(items, key);
   }
 
-  find<K, V>(items: any[], key: K): V | undefined {
+  find(items: any[], key: K): V | undefined {
     return find(items, key);
   }
 
-  findByValue<K, V>(items: any[], value: V): K | undefined {
+  findByValue(items: any[], value: V): K | undefined {
     return findByValue(items, value);
   }
 
