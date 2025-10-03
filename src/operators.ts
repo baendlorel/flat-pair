@@ -59,14 +59,13 @@ export function removeByValue<V>(items: any[], value: V): boolean {
 }
 
 /**
+ * Behaviors are similar to `Array.prototype.forEach`, caches length and checks index existence.
  *
- * @param items
- * @param callback
- * @param thisArg
+ * - `callback`: real index in the `arr` is `2 * pairIndex`.
  */
 export function forEach<K, V>(
   items: any[],
-  callback: (value: V, key: K, pairIndex: number, arr: any[]) => void,
+  callback: (value: V, key: K, pairIndex: number, array: any[]) => void,
   thisArg?: any
 ): void {
   let idx = 0;

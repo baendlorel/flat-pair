@@ -59,7 +59,7 @@ export class FlatPair<K, V> {
   }
 
   forEach(
-    callback: (value: V, key: K, pairIndex: number, arr: any[]) => void,
+    callback: (value: V, key: K, pairIndex: number, array: any[]) => void,
     thisArg?: any
   ): void {
     forEach<K, V>(this.items, callback, thisArg);
